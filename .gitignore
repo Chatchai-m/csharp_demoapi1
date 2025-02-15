@@ -1,0 +1,17 @@
+/.sonarqube
+/.vs
+/*.py
+/API/bin
+/API/obj
+
+/1Domain/bin
+/1Domain/obj
+
+/2Core/bin
+/2Core/obj
+
+/3Infra/bin
+/3Infra/obj
+/3Infra/Migrations
+
+/publish_program
