@@ -15,6 +15,7 @@ namespace _2Core.Extensions
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICarService, CarService>();
             services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddTransient<IEService, EService>();
             return services;

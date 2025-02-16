@@ -17,11 +17,13 @@ namespace _3Infra.Database
 
         public DbSet<Token> Token { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Car> Car { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new TokenConfiguration());
+            builder.ApplyConfiguration(new CarConfiguration());
         }
     }
 }

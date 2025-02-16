@@ -22,8 +22,8 @@ namespace _3Infra.Database
         }
 
         public IUserRepository UserRepository => new UserRepository(_context);
-
         public ITokenRepository TokenRepository => new TokenRepository(_context);
+        public ICarRepository CarRepository => new CarRepository(_context);
 
     }
 }

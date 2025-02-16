@@ -11,5 +11,6 @@ namespace _2Core.Interfaces.Infra.Database
         Task CommitAsync();
         IUserRepository UserRepository { get; }
         ITokenRepository TokenRepository { get; }
+        ICarRepository CarRepository { get; }
     }
 }
