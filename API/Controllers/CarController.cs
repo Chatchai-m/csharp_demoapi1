@@ -18,7 +18,8 @@ public class CarController: ControllerBase
   {
     try
     {
-      return Ok("Hello world");
+      var rs = await _carService.ListCarAsync();
+      return Ok(rs);
     }
     catch (Exception ex)
     {
