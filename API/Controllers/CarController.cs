@@ -28,7 +28,29 @@ public class CarController: ControllerBase
   }
 
   [HttpPost("Add")]
-  public async Task<ActionResult> Add()
+  public async Task<ActionResult> Add([FromBody] CarDTO car_dto)
+  {
+    try
+    {
+      if (car_dto == null){
+        return BadRequest("Invalid JSON body.");
+      }
+
+      if(car_dto.model == null){
+        return BadRequest("Model must have value");
+      }
+
+      var rs = await _carService.UpsertCarAsync(car_dto);
+      return Ok(rs);
+    }
+    catch (Exception ex)
+    {
+      return BadRequest("sadasd");
+    }
+  }
+
+  [HttpPost("Add2")]
+  public async Task<ActionResult> Add2()
   {
     try
     {
@@ -39,11 +61,11 @@ public class CarController: ControllerBase
         var rs = await _carService.UpsertCarAsync(dataObject);
         return Ok(rs);
       }
-      // return Ok("Hello world");
     }
     catch (Exception ex)
     {
       return BadRequest(ex.Message);
     }
   }
+
 }
