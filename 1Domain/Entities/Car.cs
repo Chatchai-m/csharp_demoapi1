@@ -12,6 +12,8 @@ namespace _1Domain.Entities
         public int? year { get; set; }
         [StringLength(255)]
         public string? plate_no { get; set; }
+        [StringLength(255)]
+        public string? owner { get; set; }
 
     }
 }

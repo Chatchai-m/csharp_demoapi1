@@ -29,7 +29,6 @@ namespace _2Core.Services
     {
       DateTime dateTime = _dateTimeService.Now;
       Car car_instance = _unitWork.CarRepository.GetQueryable().Where(x => x.id == dto.id).FirstOrDefault();
-
       if (car_instance == null)
       {
         car_instance = new Car();
@@ -39,6 +38,7 @@ namespace _2Core.Services
       car_instance.model = dto.model;
       car_instance.year = dto.year;
       car_instance.plate_no = dto.model;
+      car_instance.owner = dto.owner;
       await _unitWork.CarRepository.InsertOrUpdateAsynce(car_instance);
       return car_instance;
     }

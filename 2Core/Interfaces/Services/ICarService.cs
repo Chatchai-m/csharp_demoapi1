@@ -23,6 +23,7 @@ namespace _2Core.Interfaces.Services
         public string? model { get; set; }
         public int? year { get; set; }
         public string? plate_no { get; set; }
+        public string? owner { get; set; }
     }
 
 }

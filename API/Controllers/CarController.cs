@@ -8,10 +8,10 @@ public class CarController: ControllerBase
 {
   private ICarService _carService;
 
-    public CarController(ICarService carService)
-    {
-        _carService = carService;
-    }
+  public CarController(ICarService carService)
+  {
+      _carService = carService;
+  }
 
   [HttpGet("List")]
   public async Task<ActionResult> List()
