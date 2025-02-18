@@ -1,6 +1,7 @@
 using System.Text.Json;
 using _2Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 [Route("api/[controller]")]
 // [ServiceFilter(typeof(AuthFilter))]
@@ -18,6 +19,8 @@ public class CarController: ControllerBase
   {
     try
     {
+      Log.Logger.Information("List");
+      Log.Logger.Error("List error");
       var rs = await _carService.ListCarAsync();
       return Ok(rs);
     }

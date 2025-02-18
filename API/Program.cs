@@ -1,10 +1,23 @@
 using _2Core.Extensions;
 using _3Infra.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+
+
+Log.Logger = new LoggerConfiguration()
+    // .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("log_.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("lot_warning_.txt", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning, rollingInterval: RollingInterval.Day) // Log only errors
+    .WriteTo.File("lot_errors_.txt", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error, rollingInterval: RollingInterval.Day) // Log only errors
+    .CreateLogger();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Host.UseSerilog(); 
 builder.Services.AddControllers();
 builder.Services.AddCors();
 builder.Services.AddCors(o => o.AddPolicy("Default", builder =>
@@ -39,6 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging(); 
 app.UseCors("Default");
 app.UseHttpsRedirection();
 

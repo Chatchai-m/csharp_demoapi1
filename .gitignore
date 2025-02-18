@@ -3,6 +3,7 @@
 /*.py
 /API/bin
 /API/obj
+/API/*.txt
 
 /1Domain/bin
 /1Domain/obj
