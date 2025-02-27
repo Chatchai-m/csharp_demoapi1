@@ -3,6 +3,7 @@ using _3Infra.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Sinks.PostgreSQL.ColumnWriters;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -17,6 +18,23 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
+var db_sql_str = builder.Configuration["ConnectionStrings:DefaultConnection"];
+var db_post_str = builder.Configuration["ConnectionStrings:PostgreSQLConnection"];
+
+Console.WriteLine($"db_sql_str  => {db_sql_str}");
+Console.WriteLine($"db_post_str => {db_post_str}");
+
+var columnWriters = new Dictionary<string, ColumnWriterBase>
+{
+    { "timestamp", new TimestampColumnWriter() },
+    { "level", new LevelColumnWriter() },
+    { "message", new RenderedMessageColumnWriter() },
+    { "exception", new ExceptionColumnWriter() },
+    { "properties", new LogEventSerializedColumnWriter() }
+};
+
+Log.Logger = new LoggerConfiguration().WriteTo.PostgreSQL(db_post_str, "logs2", columnWriters, needAutoCreateTable: true).CreateLogger();
+    
 // Add services to the container.
 builder.Host.UseSerilog(); 
 builder.Services.AddControllers();
@@ -34,11 +52,6 @@ builder.Services.AddCors(o => o.AddPolicy("Default", builder =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var db_sql_str = builder.Configuration["ConnectionStrings:DefaultConnection"];
-var db_post_str = builder.Configuration["ConnectionStrings:PostgreSQLConnection"];
-
-Console.WriteLine($"db_sql_str  => {db_sql_str}");
-Console.WriteLine($"db_post_str => {db_post_str}");
 
 builder.Services.AddInfraDependencyInjection(builder.Configuration);
 builder.Services.AddCoreDependencyInjection();
@@ -57,8 +70,8 @@ app.UseSerilogRequestLogging();
 app.UseCors("Default");
 app.UseHttpsRedirection();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+// app.UseDefaultFiles();
+// app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
