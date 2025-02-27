@@ -19,8 +19,8 @@ public class CarController: ControllerBase
   {
     try
     {
-      Log.Logger.Information("List");
-      Log.Logger.Error("List error");
+      Log.Logger.Information("Car List");
+      Log.Logger.Error("Car List error");
       var rs = await _carService.ListCarAsync();
       return Ok(rs);
     }
